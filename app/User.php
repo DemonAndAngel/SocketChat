@@ -26,7 +26,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function friends(){
-        $this->belongsToMany(User::class,'from_user_id','to_user_id');
+    public function fromFriends(){
+        return $this->belongsToMany(User::class,'friends','from_user_id','to_user_id');
+    }
+    public function toFriends(){
+        return $this->belongsToMany(User::class,'friends','to_user_id','from_user_id');
     }
 }

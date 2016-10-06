@@ -17,3 +17,5 @@ Route::get('/home', 'HomeController@index');
 Route::post('/message','Api\ApiHomeController@sendMessage')->name('sendMessage')->middleware('auth');
 Route::post('/setMessage','Api\ApiHomeController@setMessage')->name('setMessage')->middleware('auth');
 Route::get('/offLineMessage','Api\ApiHomeController@offLineMessage')->name('offLineMessage')->middleware('auth');
+Route::get('/getFriendList','Api\ApiHomeController@getFriendList')->name('getFriendList')->middleware('auth');
+Route::get('/send','HomeController@send')->name('send')->middleware('auth');

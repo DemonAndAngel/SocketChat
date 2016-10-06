@@ -48,4 +48,9 @@ class ApiHomeController extends Controller
         $message->save();
         return $this->makeApiResponse([]);
     }
+    public function getFriendList(){
+        $user=auth()->user();
+        $friendList=collect($user->fromFriends)->merge($user->toFriends);
+        return $this->makeApiResponse($friendList);
+    }
 }
