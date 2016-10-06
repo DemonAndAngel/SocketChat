@@ -7,12 +7,14 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-
+    <style type="text/css">
+        @yield('style')
+    </style>
     <!-- Scripts -->
     <script src="//cdn.bootcss.com/socket.io/1.4.8/socket.io.min.js"></script>
     <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
