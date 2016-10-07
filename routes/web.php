@@ -12,10 +12,13 @@
 */
 
 Auth::routes();
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index')->middleware('auth');
+Route::get('/home', 'HomeController@index')->middleware('auth');
 Route::post('/message','Api\ApiHomeController@sendMessage')->name('sendMessage')->middleware('auth');
 Route::post('/setMessage','Api\ApiHomeController@setMessage')->name('setMessage')->middleware('auth');
-Route::get('/offLineMessage','Api\ApiHomeController@offLineMessage')->name('offLineMessage')->middleware('auth');
+Route::post('/setMessageForId','Api\ApiHomeController@setMessageForId')->name('setMessageForId')->middleware('auth');
+//Route::get('/offLineMessage','Api\ApiHomeController@offLineMessage')->name('offLineMessage')->middleware('auth');
+Route::get('/getMessageList','Api\ApiHomeController@getMessageList')->name('getMessageList')->middleware('auth');
+Route::get('/getMessageListInfo','Api\ApiHomeController@getMessageListInfo')->name('getMessageListInfo')->middleware('auth');
 Route::get('/getFriendList','Api\ApiHomeController@getFriendList')->name('getFriendList')->middleware('auth');
-Route::get('/send','HomeController@send')->name('send')->middleware('auth');
+Route::get('/chatPage','HomeController@chatPage')->name('chatPage')->middleware('auth');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +26,7 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function send(){
-        return view('chat');
+    public function chatPage(Request $request){
+        return view('chat',User::findOrFail($request->input('to_user_id')));
     }
 }
