@@ -61,7 +61,13 @@
                             },
                             dataType:'json',
                             success:function (data){
-                                htmlArr.push('<div class="panel-body content" to_user_id="'+toUser.id+'"><div class="col-sm-12"><span class="radius" id="count-'+toUser.id+'" >'+data.data.count+'</span><strong>'+toUser.name+'</strong></div><div class="col-sm-7"  id="message-'+toUser.id+'" >'+data.data.message.messages+'</div><div class="col-sm-5 text-right"  id="time-'+toUser.id+'">'+data.data.message.created_at+'</div></div>');
+                                var message = data.data.message;
+                                if(!message){
+                                    message={};
+                                    message.created_at='';
+                                    message.messages='';
+                                }
+                                htmlArr.push('<div class="panel-body content" to_user_id="'+toUser.id+'"><div class="col-sm-12"><span class="radius" id="count-'+toUser.id+'" >'+data.data.count+'</span><strong>'+toUser.name+'</strong></div><div class="col-sm-7"  id="message-'+toUser.id+'" >'+message.messages+'</div><div class="col-sm-5 text-right"  id="time-'+toUser.id+'">'+message.created_at+'</div></div>');
                                 $('#content').append(htmlArr.join(''));
                                 $('.content').click(function (){
                                     var to_user_id = $(this).attr('to_user_id').trim();
