@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Message;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -66,7 +67,7 @@ class ApiHomeController extends Controller
             ->where('to_user_id',auth()->user()->id)->get();
         $message2 = Message::with('fromUser','toUser')->where('from_user_id',auth()->user()->id)
             ->where('to_user_id',$request->input('from_user_id'))->get();
-        $messages=collect($message)->merge($message2)->sortByDesc('created_at')->values()->all();
+        $messages=collect($message)->merge($message2)->sortBy('created_at')->values()->all();
         return $this->makeApiResponse(compact('messages'));
     }
     public function setMessage(Request $request){
@@ -89,7 +90,19 @@ class ApiHomeController extends Controller
     }
     public function getFriendList(){
         $user=auth()->user();
-        $friendList=collect($user->fromFriends)->merge($user->toFriends);
+        $friendList=collect($user->fromFriends()->where('is_friend',2)->get())->merge($user->toFriends()->where('is_friend',2)->get());
         return $this->makeApiResponse($friendList);
+    }
+    public function getUserInfo(Request $request){
+        $users = User::where('name','like','%'.$request->input('friend_name').'%')->where('id','!=',auth()->user()->id)->limit(5)->get();
+        return $this->makeApiResponse($users);
+    }
+    public function addFriend(Request $request){
+        $self = User::where('id',auth()->user()->id)->first();
+        $then = User::where('id',$request->input('friend_id'))->first();
+        if(!$then)
+            return $this->makeApiResponse([],'找不到用户',10001);
+        $self->fromFriends()->attach($then->id);
+        return $this->makeApiResponse([]);
     }
 }

@@ -37,6 +37,7 @@
     <script>
         var NOWUSERID=0;
         function init(){
+            NOWUSERID=0;
             $('#content').html('');
             $.ajax({
                 url:'{{ route('getFriendList') }}',
@@ -114,6 +115,7 @@
                         }
                     });
                     $('#message_content-'+data.fromUser.id).append('<dl><dt><span style="padding-right: 2%">'+data.fromUser.name+'</span><small>'+data.message.created_at+'</small></dt><dd>'+data.message.messages+'</dd></dl>');
+                    $('#message_content-'+data.fromUser.id).scrollTop($('#message_content-'+data.fromUser.id).get(0).scrollHeight);
                 }
                 if(data.message.is_receive==0&&NOWUSERID!=data.fromUser.id)
                     $('#count-'+data.fromUser.id).html(Number($('#count-'+data.fromUser.id).html())+1);
@@ -125,6 +127,7 @@
                 $('#time-'+data.toUser.id).html(data.message.created_at);
                 if(NOWUSERID==data.toUser.id)
                 $('#message_content-'+data.toUser.id).append('<dl style="text-align: right"><dt><span style="padding-right: 2%">'+data.fromUser.name+'</span><small>'+data.message.created_at+'</small></dt><dd>'+data.message.messages+'</dd></dl>');
+                $('#message_content-'+data.toUser.id).scrollTop($('#message_content-'+data.toUser.id).get(0).scrollHeight);
             });
             $('#myModal').on('hide.bs.modal', function () {
                 NOWUSERID=0;

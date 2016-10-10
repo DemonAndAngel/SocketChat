@@ -27,9 +27,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     public function fromFriends(){
-        return $this->belongsToMany(User::class,'friends','from_user_id','to_user_id');
+        return $this->belongsToMany(User::class,'friends','from_user_id','to_user_id')->withTimestamps();
     }
     public function toFriends(){
-        return $this->belongsToMany(User::class,'friends','to_user_id','from_user_id');
+        return $this->belongsToMany(User::class,'friends','to_user_id','from_user_id')->withTimestamps();
     }
 }
